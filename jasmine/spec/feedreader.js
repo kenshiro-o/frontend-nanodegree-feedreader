@@ -95,22 +95,24 @@ $(function () {
 
     /* TODO: Write a new test suite named "New Feed Selection" */
     describe("New Feed Selection", function () {
+        var previous_content;
+        var new_content;
         beforeEach(function (done) {
-            setTimeout(function () {
-                done();
-            }, 1);
+            loadFeed(0, function () {
+                previous_content = $(".feed .entry").text();
+                loadFeed(1, function () {
+                    new_content = $(".feed .entry").text();
+                    done();
+                })
+            })
         });
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-        it("changes the content", function (done) {
-            var previous_content = $(".feed .entry").text();
-            loadFeed(2, function () {
-                expect($(".feed .entry").text()).not.toEqual(previous_content);
-                done();
-            });
+        it("changes the content", function () {
+            expect(new_content).not.toEqual(previous_content);
         });
     });
 }());
